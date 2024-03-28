@@ -1,0 +1,83 @@
+/*
+nr 3
+se citeste u vector cu n elemente. sa se frmeze un nou vector doar cu elementele perfecte. se va afisa vectorul iar apoi se vor insera intre oricare doua elemente alaturate valoarea 1. se va permuta vectorul cu  o pozitie spre stanga circular
+*/
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int v[10001],nou[10001];
+
+long long perf(int a)
+{
+    long long s=0;
+    int i;
+    for(i=1;i*i<a;i++)
+    {
+        if(a%i==0)
+        {
+            s+=i;
+            s+=a/i;
+        }
+    }
+    if(i*i==a)
+    {
+        s+=i;
+    }
+    s-=a;
+    return s;
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    int n,e=0;
+    cin>>n;
+    for(int i=1;i<=n;i++)
+    {
+        cin>>v[i];
+        if(perf(v[i])==v[i])
+        {
+            nou[++e]=v[i];
+        }
+    }
+    for(int i=1;i<=e;i++)
+    {
+        cout<<nou[i]<<" ";
+    }
+    cout<<endl;
+    int ini=e;
+    for(int i=2;i<=e;i++)
+    {
+        for(int d=e;d>=i;d--)
+        {
+            nou[d+1]=nou[d];
+        }
+        e++;
+        nou[i]=1;
+        i++;
+    }
+    for(int i=1;i<=e;i++)
+    {
+        cout<<nou[i]<<" ";
+    }
+    cout<<endl;
+    int st=nou[1];
+    for(int i=1;i<=2*ini-1;i++)
+    {
+        nou[i]=nou[i+1];
+    }
+    nou[2*ini-1]=st;
+    for(int i=1;i<=e;i++)
+    {
+        cout<<nou[i]<<" ";
+    }
+    cout<<endl;
+
+    return 0;
+}
+
+
